@@ -1,0 +1,5 @@
+{
+  "port": "5000",
+  "mongoUri": "mongodb+srv://Olga:WxsMhQGWCaslTXwn@cluster0.w5d9hpu.mongodb.net/app?retryWrites=true&w=majority",
+  "jwtSecret": "rs clone"
+}

@@ -1,0 +1,33 @@
+{
+  "name": "rs-clone-back",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "server": "nodemon app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/oolenkazolot/rs-clone-back.git"
+  },
+  "author": "\"Olga Zolotareva <oolenka.zolot@gmail.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/oolenkazolot/rs-clone-back/issues"
+  },
+  "homepage": "https://github.com/oolenkazolot/rs-clone-back#readme",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "config": "^3.3.9",
+    "cors": "^2.8.5",
+    "express": "^4.18.2",
+    "express-validator": "^6.14.3",
+    "jsonwebtoken": "^9.0.0",
+    "mongoose": "^6.9.0"
+  },
+  "devDependencies": {
+    "concurrently": "^7.6.0",
+    "nodemon": "^2.0.20"
+  }
+}
