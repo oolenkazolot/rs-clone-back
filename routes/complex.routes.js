@@ -33,4 +33,19 @@ router.post('/create', [check('name', 'Complex name not specified').exists(), ch
   }
 });
 
+router.get('/get/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const complex = await Complex.find({ userId: id });
+    if (complex) {
+      return res.json(complex);
+    } else {
+      return res.json({ message: 'user does not exist' });
+    }
+  } catch (e) {
+    res.status(500).json({ message: 'Something went wrong, please try again' });
+  }
+});
+
 module.exports = router;

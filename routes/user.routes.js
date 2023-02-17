@@ -2,6 +2,7 @@ const { Router } = require('express');
 const { check, validationResult } = require('express-validator');
 const router = Router();
 const UserInfo = require('../models/UserInfo');
+const User = require('../models/User');
 
 // /api/user/create
 router.post(
@@ -26,11 +27,22 @@ router.post(
       }
       const { id, goal, load, weight, height, units } = req.body;
 
-      const candidate = await UserInfo.findOne({ userId: id });
+      const user = await User.findOne({ _id: userId });
+      if (!user) {
+        return res.status(400).json({
+          message: 'UserId does not exist',
+        });
+      }
 
-      if (!candidate) {
-        const user = new UserInfo({ userId: id, goal, load, weight, height, units });
-        await user.save();
+      const userInfo = await UserInfo.findOne({ userId: id });
+
+      if (!userInfo) {
+        const userInfo = new UserInfo({ userId: id, goal, load, weight, height, units });
+        await userInfo.save();
+      } else {
+        return res.status(400).json({
+          message: 'User information already exists',
+        });
       }
       return res.json({ message: 'Your data has been saved' });
     } catch (e) {
