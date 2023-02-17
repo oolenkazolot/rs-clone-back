@@ -1,4 +1,3 @@
-const User = require('../models/User');
 const { Router } = require('express');
 const { check, validationResult } = require('express-validator');
 const router = Router();
@@ -8,6 +7,7 @@ const UserInfo = require('../models/UserInfo');
 router.post(
   '/create',
   [
+    check('userId', 'Not selected userId').exists(),
     check('goal', 'Not selected goal').exists(),
     check('load', 'Not selected load').exists(),
     check('weight', 'Not specified weight').exists(),
