@@ -12,6 +12,7 @@ app.use('/api/complex', require('./routes/complex.routes'));
 app.use('/api/exercise', require('./routes/exercise.routes'));
 
 const PORT = config.get('port') || 5000;
+mongoose.set('strictQuery', false);
 
 async function start() {
   try {
