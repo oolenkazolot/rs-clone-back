@@ -22,26 +22,51 @@ router.post('/create', [check('name', 'Complex name not specified').exists(), ch
     if (user) {
       const complex = new Complex({ userId, name });
       await complex.save();
+      return res.json(complex);
     } else {
       return res.status(400).json({
         message: 'UserId does not exist',
       });
     }
-    return res.json({ message: 'Your data has been saved' });
   } catch (e) {
     res.status(500).json({ message: 'Something went wrong, please try again' });
   }
 });
 
+// /api/complex/get/
+//получить все комплексы
 router.get('/get/:id', async (req, res) => {
   try {
     const { id } = req.params;
 
-    const complex = await Complex.find({ userId: id });
-    if (complex) {
-      return res.json(complex);
+    const complexes = await Complex.find({ userId: id });
+    if (complexes) {
+      return res.json(complexes);
     } else {
-      return res.json({ message: 'user does not exist' });
+      return res.status(400).json({
+        message: 'Сomplex does not exist',
+      });
+    }
+  } catch (e) {
+    res.status(500).json({ message: 'Something went wrong, please try again' });
+  }
+});
+
+// /api/complex/delete/
+// удалить комплекс
+// передаётся idComplex уникальный
+// возвращается удаленный комплекс
+
+router.delete('/delete/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+    const result = await Complex.findOneAndDelete({ _id: id });
+    if (result) {
+      res.json({ massage: 'Complex removed' });
+    } else {
+      return res.status(400).json({
+        message: 'Сomplex does not exist',
+      });
     }
   } catch (e) {
     res.status(500).json({ message: 'Something went wrong, please try again' });
