@@ -25,7 +25,7 @@ router.post(
           message: 'Invalid user data',
         });
       }
-      const { id, goal, load, weight, height, units } = req.body;
+      const { userId, goal, load, weight, height, units } = req.body;
 
       const user = await User.findOne({ _id: userId });
       if (!user) {
@@ -34,10 +34,10 @@ router.post(
         });
       }
 
-      const userInfo = await UserInfo.findOne({ userId: id });
+      const userInfo = await UserInfo.findOne({ userId: userId });
 
       if (!userInfo) {
-        const userInfo = new UserInfo({ userId: id, goal, load, weight, height, units });
+        const userInfo = new UserInfo({ userId, goal, load, weight, height, units });
         await userInfo.save();
       } else {
         return res.status(400).json({
