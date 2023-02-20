@@ -40,10 +40,10 @@ router.post(
   }
 );
 
-// /api/exercise/get/
+// /api/exercise/get-all/
 //получить все упражнения для комплекса
 //передаётся id комплекса
-router.get('/get/:id', async (req, res) => {
+router.get('/get-all/:id', async (req, res) => {
   try {
     const { id } = req.params;
 
@@ -53,6 +53,26 @@ router.get('/get/:id', async (req, res) => {
     } else {
       return res.status(400).json({
         message: 'Exercises not found, id complex not found',
+      });
+    }
+  } catch (e) {
+    res.status(500).json({ message: 'Something went wrong, please try again' });
+  }
+});
+
+// /api/exercise/get/
+//получить упражнение
+//в пути указывается уникальный idExercise
+router.get('/get/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const exercise = await Exercise.find({ _id: id });
+    if (exercise) {
+      return res.json(exercise);
+    } else {
+      return res.status(400).json({
+        message: 'Exercise not found, id complex not found',
       });
     }
   } catch (e) {

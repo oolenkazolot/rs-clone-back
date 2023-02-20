@@ -33,15 +33,36 @@ router.post('/create', [check('name', 'Complex name not specified').exists(), ch
   }
 });
 
-// /api/complex/get/
+// /api/complex/get-all/
 //получить все комплексы
-router.get('/get/:id', async (req, res) => {
+//в пути указываем userId
+router.get('/get-all/:id', async (req, res) => {
   try {
     const { id } = req.params;
 
     const complexes = await Complex.find({ userId: id });
     if (complexes) {
       return res.json(complexes);
+    } else {
+      return res.status(400).json({
+        message: 'Сomplexes does not exist',
+      });
+    }
+  } catch (e) {
+    res.status(500).json({ message: 'Something went wrong, please try again' });
+  }
+});
+
+// /api/complex/get/
+//получить один комплекс
+//в пути указываем уникальный idComplex
+router.get('/get/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const complex = await Complex.find({ _id: id });
+    if (complex) {
+      return res.json(complex);
     } else {
       return res.status(400).json({
         message: 'Сomplex does not exist',
