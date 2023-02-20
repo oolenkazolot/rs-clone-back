@@ -66,13 +66,43 @@ router.get('/get-all/:id', async (req, res) => {
 router.get('/get/:id', async (req, res) => {
   try {
     const { id } = req.params;
-
-    const exercise = await Exercise.find({ _id: id });
+    const exercise = await Exercise.findOne({ _id: id });
     if (exercise) {
       return res.json(exercise);
     } else {
       return res.status(400).json({
         message: 'Exercise not found, id complex not found',
+      });
+    }
+  } catch (e) {
+    res.status(500).json({ message: 'Something went wrong, please try again' });
+  }
+});
+
+// /api/exercise/update/
+//обновить время тринироки/количество подходов (count)
+//в пути указывается уникальный idExercise
+
+router.put('/update/:id', [check('count', 'Not specified count').exists()], async (req, res) => {
+  try {
+    const errors = validationResult(req);
+
+    if (!errors.isEmpty()) {
+      return res.status(400).json({
+        errors: errors.array(),
+        message: 'Invalid exercise data',
+      });
+    }
+    const { id } = req.params;
+    const { count } = req.body;
+    const exercise = await Exercise.findOne({ _id: id });
+    if (exercise) {
+      exercise.count = count;
+      await exercise.save();
+      return res.json(exercise);
+    } else {
+      return res.status(400).json({
+        message: 'Exercise not found',
       });
     }
   } catch (e) {

@@ -60,7 +60,7 @@ router.get('/get/:id', async (req, res) => {
   try {
     const { id } = req.params;
 
-    const complex = await Complex.find({ _id: id });
+    const complex = await Complex.findOne({ _id: id });
     if (complex) {
       return res.json(complex);
     } else {
