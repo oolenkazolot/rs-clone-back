@@ -96,11 +96,11 @@ router.get('/weekly-workouts/:id', async (req, res) => {
 
     const resultData = {
       weeklyWorkouts: [],
-      goal: '0',
+      load: '0',
     };
 
     if (userInfo) {
-      resultData.goal = userInfo.goal;
+      resultData.load = userInfo.load;
     }
 
     if (completed) {
