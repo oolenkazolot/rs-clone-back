@@ -23,7 +23,7 @@ router.post('/create', [check('userId', 'Missing userId').exists(), check('idCom
     const user = await User.findOne({ _id: userId });
 
     if (user) {
-      const completed = new Completed({ userId, idComplex, date: new Date('2023-02-27'), time });
+      const completed = new Completed({ userId, idComplex, date: new Date(), time });
       await completed.save();
       return res.json(completed);
     } else {
