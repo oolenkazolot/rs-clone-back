@@ -37,7 +37,7 @@ router.post(
       const userInfo = await UserInfo.findOne({ userId: userId });
 
       if (!userInfo) {
-        const userInfo = new UserInfo({ userId, goal, load, weight, height, units });
+        const userInfo = new UserInfo({ userId, goal, timeRest: '20', load, weight, height, units });
         await userInfo.save();
       } else {
         return res.status(400).json({
@@ -92,8 +92,65 @@ router.put('/update/:id', [check('weight', 'Not specified weight').exists(), che
     userInfo.height = height;
     userInfo.weight = weight;
     await userInfo.save();
+    return res.json(userInfo);
+  } catch (e) {
+    res.status(500).json({ message: 'Something went wrong, please try again' });
+  }
+});
 
-    return res.json({ message: 'Your data has been saved' });
+// /api/user/update-rest
+
+router.put('/update-rest/:id', [check('timeRest', 'Not specified time rest').exists()], async (req, res) => {
+  try {
+    const errors = validationResult(req);
+
+    if (!errors.isEmpty()) {
+      return res.status(400).json({
+        errors: errors.array(),
+        message: 'Invalid user data',
+      });
+    }
+    const { id } = req.params;
+    const { timeRest } = req.body;
+
+    const userInfo = await UserInfo.findOne({ userId: id });
+
+    if (!userInfo) {
+      const user = new UserInfo({ userId: id, timeRest });
+      await user.save();
+    }
+    userInfo.timeRest = timeRest;
+    await userInfo.save();
+    return res.json(userInfo);
+  } catch (e) {
+    res.status(500).json({ message: 'Something went wrong, please try again' });
+  }
+});
+
+// /api/user/update-load
+
+router.put('/update-load/:id', [check('load', 'Not specified load').exists()], async (req, res) => {
+  try {
+    const errors = validationResult(req);
+
+    if (!errors.isEmpty()) {
+      return res.status(400).json({
+        errors: errors.array(),
+        message: 'Invalid user data',
+      });
+    }
+    const { id } = req.params;
+    const { load } = req.body;
+
+    const userInfo = await UserInfo.findOne({ userId: id });
+
+    if (!userInfo) {
+      const user = new UserInfo({ userId: id, load });
+      await user.save();
+    }
+    userInfo.load = load;
+    await userInfo.save();
+    return res.json(userInfo);
   } catch (e) {
     res.status(500).json({ message: 'Something went wrong, please try again' });
   }
