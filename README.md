@@ -1,9 +1,9 @@
 # rs-clone-back
 # Примеры отдельных запросов к серверу: 
 
- регистрация
+регистрация
 
-http://localhost:5000/api/auth/register
+https://rs-clone-back-production-b4b7.up.railway.app/api/auth/register
 method: "POST",
 headers: {
    "Content-Type": "application/json"
@@ -13,9 +13,8 @@ body:{
   password: string
 }
 
- авторизация
-
-http://localhost:5000/api/auth/login
+авторизация
+https://rs-clone-back-production-b4b7.up.railway.app/api/auth/login
 method: "POST",
 headers: {
    "Content-Type": "application/json"
@@ -25,9 +24,9 @@ body: body:{
   password: string
 }
 
- создание userInfo
+создание userInfo
 
-http://localhost:5000/api/user/create
+https://rs-clone-back-production-b4b7.up.railway.app/api/user/create
 method: "POST",
 headers: {
    "Content-Type": "application/json"
@@ -42,20 +41,4 @@ body: {
   units: string, // "kg-cm" / "Lbs-inches"
 
 }
-
- получение userInfo
-
-http://localhost:5000/api/user/get/id
-
- обновление userInfo
-
-http://localhost:5000/api/user/update/id
-method: "PUT"
-headers: {
-   "Content-Type": "application/json"
-},
-body: {
-            weight: string,
-            height: srring,
-          }
-и другие...
+и другие ...
