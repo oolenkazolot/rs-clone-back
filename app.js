@@ -12,7 +12,7 @@ app.use('/api/complex', require('./routes/complex.routes'));
 app.use('/api/exercise', require('./routes/exercise.routes'));
 app.use('/api/completed', require('./routes/completed.routes'));
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3333;
 mongoose.set('strictQuery', false);
 
 async function start() {
